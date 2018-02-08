@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
 
+import junit.framework.Test;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void Gravador() {
+    private void Gravador(String Gravar) {
         String filename = "DamonPicudo.xml";
-        String string = Teste;
+        String string = Gravar;
         FileOutputStream outputStream;
 
         try {
@@ -79,43 +81,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Trabalhador() {
-        int a;
+        int a,x;
+String Retorno;
 
-        BaseDadosScrool Base = new BaseDadosScrool();
 
         SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
         Date data = new Date();
         String dataFormatada = formataData.format(data);
 
         List<BaseDadosScrool> ListaScrool = new ArrayList<BaseDadosScrool>();
+DamonXml Teste = new DamonXml();
 
-        Base.setData(dataFormatada);
-        Base.setNumero_Scrool_Mistico_3_Estrela(1);
-        Base.setNumero_Scrool_Mistico_4_Estrela(1);
-        Base.setNumero_Scrool_Mistico_4_Estrela_Fake(1);
-        Base.setNumero_Scrool_Mistico_5_Estrela(1);
-        Base.setNumero_Scrool_Mistico_5_Estrela_Fake(1);
+        for(x=0;x<40;x++) {
+            BaseDadosScrool Base = new BaseDadosScrool();
 
-        Base.setNumero_Scrool_Luz_Escuridao_3_Estrela(1);
-        Base.setNumero_Scrool_Luz_Escuridao_4_Estrela(1);
-        Base.setNumero_Scrool_Luz_Escuridao_4_Estrela_Fake(1);
-        Base.setNumero_Scrool_Luz_Escuridao_5_Estrela(1);
-        Base.setNumero_Scrool_Luz_Escuridao_5_Estrela_Fake(1);
+            Base.setData(dataFormatada);
+            Base.setNumero_Scrool_Mistico_3_Estrela((1+x));
+            Base.setNumero_Scrool_Mistico_4_Estrela(1);
+            Base.setNumero_Scrool_Mistico_4_Estrela_Fake(1);
+            Base.setNumero_Scrool_Mistico_5_Estrela(1);
+            Base.setNumero_Scrool_Mistico_5_Estrela_Fake(1);
 
-        Base.setNumero_Pedra_de_Evocacao_3_Estrela(1);
-        Base.setNumero_Pedra_de_Evocacao_4_Estrela(1);
-        Base.setNumero_Pedra_de_Evocacao_4_Estrela_Fake(1);
-        Base.setNumero_Pedra_de_Evocacao_5_Estrela(1);
-        Base.setNumero_Pedra_de_Evocacao_5_Estrela_Fake(1);
+            Base.setNumero_Scrool_Luz_Escuridao_3_Estrela(1+x);
+            Base.setNumero_Scrool_Luz_Escuridao_4_Estrela(1);
+            Base.setNumero_Scrool_Luz_Escuridao_4_Estrela_Fake(1);
+            Base.setNumero_Scrool_Luz_Escuridao_5_Estrela(1);
+            Base.setNumero_Scrool_Luz_Escuridao_5_Estrela_Fake(1);
 
-        Base.setNumero_Scrool_Lendario_4_Estrela(1);
-        Base.setNumero_Scrool_Lendario_4_Estrela_Fake(1);
-        Base.setNumero_Scrool_Lendario_5_Estrela(1);
-        Base.setNumero_Scrool_Lendario_5_Estrela_Fake(1);
+            Base.setNumero_Pedra_de_Evocacao_3_Estrela(1+x);
+            Base.setNumero_Pedra_de_Evocacao_4_Estrela(1);
+            Base.setNumero_Pedra_de_Evocacao_4_Estrela_Fake(1);
+            Base.setNumero_Pedra_de_Evocacao_5_Estrela(1);
+            Base.setNumero_Pedra_de_Evocacao_5_Estrela_Fake(1);
+
+            Base.setNumero_Scrool_Lendario_4_Estrela(1);
+            Base.setNumero_Scrool_Lendario_4_Estrela_Fake(1+x);
+            Base.setNumero_Scrool_Lendario_5_Estrela(1);
+            Base.setNumero_Scrool_Lendario_5_Estrela_Fake(1);
 
 
-        ListaScrool.add(Base);
-
+            ListaScrool.add(Base);
+        }
 /*
 
         for (int i = 0; i < 100; i++) {
@@ -124,11 +130,44 @@ public class MainActivity extends AppCompatActivity {
             ListaScrool.add(Base);
         }
 */
+
+        try {
+
+            Teste.EscreverNovo(ListaScrool);
+
+        Log.i("SaidaLeitor","Retorno");
+        } catch (Exception e) {
+            Log.wtf("TesteLeitor", e.getMessage());
+        }
+
+        try {
+            Gravador(Teste.EscreverNovo(ListaScrool));
+
+
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Gravador();
+
+
+
         for (int i = 0; i < ListaScrool.size(); i++) {
             a = ListaScrool.get(i).getNumero_Scrool_Mistico_3_Estrela();
 
-            Log.i("LISTA", Integer.toString(a));
+            Log.i("LISTA3", Integer.toString(a));
             Log.i("LISTA1", ListaScrool.get(i).getData());
+            Log.i("LISTA2",Integer.toString(i));
+
+
+            Log.i("LISTA4",Integer.toString(ListaScrool.get(10).getNumero_Scrool_Mistico_3_Estrela()));
+
+            Log.i("LISTA5",Integer.toString(ListaScrool.get(20).getNumero_Scrool_Mistico_3_Estrela()));
+
+            Log.i("LISTA6",Integer.toString(ListaScrool.get(14).getNumero_Scrool_Mistico_3_Estrela()));
+
+
         }
 
 
